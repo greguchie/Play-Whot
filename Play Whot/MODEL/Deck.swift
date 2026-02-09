@@ -49,4 +49,5 @@ struct Deck {
         groupOfCards.removeFirst(count)
         return aHand
     }
+    //note that "groupOfCards" reduces after each "dealAHand" func called, hence the mutating
 }
