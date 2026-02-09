@@ -11,22 +11,6 @@ class HandView: UIView {
     private var cardImageViews: [UIImageView] = []
     private weak var selectedCard: UIImageView?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        // Set a default background color; adjust hex as needed
-        self.backgroundColor = UIColor(hex: "#F5F5F2")
-        // Improves shadow performance
-        self.layer.masksToBounds = false
-    }
     
     func show(images: [UIImage]) {
         // Remove old cards
