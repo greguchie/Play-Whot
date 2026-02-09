@@ -14,6 +14,15 @@ class GameTable: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    let images:[UIImage] = [
+        UIImage(named: "circle2")!,
+        UIImage(named: "square14")!,
+        UIImage(named: "circle10")!,
+        UIImage(named: "square7")!,
+        UIImage(named: "star2")!,
+    ]
+    
+    //Hand.show(images: images)
 
 }
 
