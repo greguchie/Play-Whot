@@ -20,8 +20,8 @@ class GameBrain {
         deck.shuffle()
         
         //now each player is deal 7 cards each from the shuffled deck. note this turns the player.hasWon property false even though we are not using the property now
-        player1 = Player(hand: deck.dealAHand(7))
-        player2 = Player(hand: deck.dealAHand(7))
+        player1 = Player(hand: deck.dealAHand(10))
+        player2 = Player(hand: deck.dealAHand(10))
         
         //game places a random card from the current deck of cards created, and player one becomes first player
         tableCard = deck.groupOfCards.randomElement()!

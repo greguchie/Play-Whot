@@ -8,101 +8,131 @@
 import UIKit
 
 class HandView: UIView {
+    
+    //var handHidden: Bool = true
+    
+    // MARK: - UI Containers
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+
+    // MARK: - Card Storage
     private var cardImageViews: [UIImageView] = []
-    private weak var selectedCard: UIImageView?
+    private(set) var selectedCard: UIImageView?
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    private func setup() {
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.clipsToBounds = false
+
+        contentView.clipsToBounds = false
+
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        scrollView.frame = bounds
+    }
     
     
-    func show(images: [UIImage]) {
+    func show(cards: [Card]) {
+
         // Remove old cards
         cardImageViews.forEach { $0.removeFromSuperview() }
         cardImageViews.removeAll()
-        
+        selectedCard = nil
+
         let cardWidth: CGFloat = 80
         let cardHeight: CGFloat = 120
-        
-        
-        // MARK: - determining whether to space cards or overlay
-        let totalCardWidth = CGFloat(images.count) * cardWidth
-        let availableWidth = bounds.width
-        
-        let spacing: CGFloat
-        let overlap: CGFloat
-        
-        //space cards
-        if totalCardWidth <= availableWidth {
-            // Cards fit — spread them evenly
-            spacing = (availableWidth - totalCardWidth) / CGFloat(images.count + 1)
-            overlap = cardWidth + spacing
-        }
-        //overlay
-        else {
-            // Cards don’t fit — overlap
-            spacing = 0
-            overlap = (availableWidth - cardWidth) / CGFloat(images.count - 1)
-        }
-        
-        
-        
-        // MARK: - structuring image programatically
-        for (index, image) in images.enumerated() {
-            //position of each card(x) depending on available space
-            let x: CGFloat = totalCardWidth <= availableWidth
-            ? spacing + CGFloat(index) * (cardWidth + spacing)
-            : CGFloat(index) * overlap
-            
-            
-            //someImageView with our calculated x positioning, y=boundary height
+        let overlap: CGFloat = 60   // Controls how much cards overlap
+
+        let totalWidth = CGFloat(cards.count - 1) * overlap + cardWidth
+
+        for (index, card) in cards.enumerated() {
+
+            let x = CGFloat(index) * overlap
+
             let imageView = UIImageView(frame: CGRect(
                 x: x,
                 y: bounds.height - cardHeight,
                 width: cardWidth,
                 height: cardHeight
             ))
-            
-            
-            //still iterating through images array
-            imageView.image = image
+
+            imageView.image = UIImage(named: "\(card.shape)\(card.number)")
             imageView.contentMode = .scaleAspectFit
             imageView.isUserInteractionEnabled = true
-            
+
             imageView.layer.cornerRadius = 8
             imageView.layer.shadowOpacity = 0.3
             imageView.layer.shadowRadius = 6
             imageView.layer.shadowOffset = CGSize(width: 0, height: 2)
             imageView.layer.shadowColor = UIColor.black.cgColor
-            
+
             let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
             imageView.addGestureRecognizer(tap)
-            
-            addSubview(imageView)
+
+            contentView.addSubview(imageView)
             cardImageViews.append(imageView)
         }
+
+        contentView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: max(totalWidth, bounds.width),
+            height: bounds.height
+        )
+
+        scrollView.contentSize = contentView.frame.size
     }
-    
-   
+
+    // MARK: - Selection
+
     @objc private func cardTapped(_ sender: UITapGestureRecognizer) {
-        guard let card = sender.view as? UIImageView else { return }
+        guard let cardView = sender.view as? UIImageView else { return }
 
         // Deselect previous
-        if let previous = selectedCard, previous != card {
+        if let previous = selectedCard, previous != cardView {
             UIView.animate(withDuration: 0.15) {
                 previous.transform = .identity
             }
         }
 
-        // Select new
-        selectedCard = card
-        bringSubviewToFront(card)
+        // Toggle selection
+        if selectedCard == cardView {
+            UIView.animate(withDuration: 0.15) {
+                cardView.transform = .identity
+            }
+            selectedCard = nil
+            return
+        }
+
+        selectedCard = cardView
+        contentView.bringSubviewToFront(cardView)
 
         UIView.animate(withDuration: 0.2) {
-            card.transform = CGAffineTransform(translationX: 0, y: -20)
+            cardView.transform = CGAffineTransform(translationX: 0, y: -20)
         }
+
+        // Optional: auto-scroll selected card into view
+        scrollView.scrollRectToVisible(
+            cardView.frame.insetBy(dx: -100, dy: 0),
+            animated: true
+        )
     }
-    
 }
-
-
-
 
 extension UIColor {
     convenience init?(hex: String) {

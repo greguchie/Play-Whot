@@ -2,6 +2,7 @@
 
 enum Shape: CaseIterable {
     case square
+    case triangle
     case circle
     case cross
     case star

@@ -8,26 +8,25 @@
 import UIKit
 
 class GameTable: UIViewController {
-  
     
     
     @IBOutlet weak var playerOneHand: HandView!
+    @IBOutlet weak var playerTwoHand: HandView!
+    @IBOutlet weak var tableCard: UIImageView!
+    var myGame = GameBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        let images:[UIImage] = [
-            UIImage(named: "circle2")!,
-            UIImage(named: "square14")!,
-            UIImage(named: "circle10")!,
-            UIImage(named: "square7")!,
-            UIImage(named: "star2")!,
-        ]
-        
-        playerOneHand.show(images: images)
+        playerOneHand.show(cards: myGame.player1.hand)
+    }
+    //playerOneHand.show(images: myGame.player1.hand)
+    
+    
+    @IBAction func playButtonPressed(_ sender: Any) {
+        print(myGame.tableCard)
+        print("player 1 card:\(myGame.player1.hand[0].shape)")
     }
     
-
 }
 

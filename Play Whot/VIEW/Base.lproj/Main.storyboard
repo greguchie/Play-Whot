@@ -16,37 +16,144 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy0-mL-2tY" customClass="HandView" customModule="Play_Whot" customModuleProvider="target">
-                                <rect key="frame" x="16" y="624" width="361" height="140"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="Q3M-Qb-bBe"/>
-                                </constraints>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Dh2-no-rCi" userLabel="mainGame">
+                                <rect key="frame" x="15" y="118" width="363" height="666"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6zU-n0-Q84" userLabel="PlayerTwo" customClass="HandView" customModule="Play_Whot" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="363" height="140"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="iV9-Te-MSC"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jq6-Xz-xrX" userLabel="Table">
+                                        <rect key="frame" x="0.0" y="140" width="363" height="386"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mu5-0G-WoO" userLabel="mrktButton">
+                                                <rect key="frame" x="273" y="20" width="70" height="130.33333333333334"/>
+                                                <color key="backgroundColor" red="0.72156862749999995" green="0.48627450979999998" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                            </button>
+                                            <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6iO-7B-WCJ" userLabel="marketStack">
+                                                <rect key="frame" x="273" y="20" width="70" height="130.33333333333334"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whotmarket" translatesAutoresizingMaskIntoConstraints="NO" id="DSA-Fq-40T" userLabel="market">
+                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="105" id="52I-Tz-mjd"/>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="owr-kt-SQh"/>
+                                                            <constraint firstAttribute="height" constant="105" id="uSC-q1-vRs"/>
+                                                            <constraint firstAttribute="width" constant="70" id="uYT-Mg-Qsx"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Market" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i09-4b-Ws1">
+                                                        <rect key="frame" x="3.3333333333333179" y="105" width="63.333333333333343" height="25.333333333333343"/>
+                                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="22"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whotback" translatesAutoresizingMaskIntoConstraints="NO" id="ZzX-n0-zPV" userLabel="tableCard">
+                                                <rect key="frame" x="131.66666666666666" y="118" width="100" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="9aA-7e-ugJ"/>
+                                                    <constraint firstAttribute="width" constant="100" id="Fhw-TL-DOE"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Vnu-Xh-nlj"/>
+                                                    <constraint firstAttribute="height" constant="150" id="wXL-O7-4Fs"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvQ-PE-jAA" userLabel="playButton">
+                                                <rect key="frame" x="289.66666666666669" y="314" width="73.333333333333314" height="72"/>
+                                                <color key="backgroundColor" red="0.72156862749999995" green="0.48627450979999998" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="playButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8UK-hn-U0c"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1xR-x8-mDb" userLabel="playStack">
+                                                <rect key="frame" x="289.66666666666669" y="314" width="73.333333333333314" height="72"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKd-QU-Pv3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="22"/>
+                                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="19"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1playcard" translatesAutoresizingMaskIntoConstraints="NO" id="36M-xZ-ox2" userLabel="playcard">
+                                                        <rect key="frame" x="11.666666666666629" y="22" width="50" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="8xu-BU-w1H"/>
+                                                            <constraint firstAttribute="width" constant="50" id="CI2-xE-7mJ"/>
+                                                            <constraint firstAttribute="height" constant="50" id="jaJ-b6-obF"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="uxM-8A-7f0"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="6iO-7B-WCJ" secondAttribute="trailing" constant="20" id="00q-0Y-afZ"/>
+                                            <constraint firstItem="pvQ-PE-jAA" firstAttribute="bottom" secondItem="1xR-x8-mDb" secondAttribute="bottom" id="7Vp-Hk-8qb"/>
+                                            <constraint firstItem="pvQ-PE-jAA" firstAttribute="leading" secondItem="1xR-x8-mDb" secondAttribute="leading" id="7tt-Op-wwq"/>
+                                            <constraint firstItem="mu5-0G-WoO" firstAttribute="trailing" secondItem="6iO-7B-WCJ" secondAttribute="trailing" id="BHk-f8-se0"/>
+                                            <constraint firstAttribute="bottom" secondItem="1xR-x8-mDb" secondAttribute="bottom" id="Hu1-QJ-9UL"/>
+                                            <constraint firstItem="ZzX-n0-zPV" firstAttribute="centerY" secondItem="jq6-Xz-xrX" secondAttribute="centerY" id="Kov-O9-QNI"/>
+                                            <constraint firstItem="mu5-0G-WoO" firstAttribute="bottom" secondItem="6iO-7B-WCJ" secondAttribute="bottom" id="NRN-fN-uBS"/>
+                                            <constraint firstItem="pvQ-PE-jAA" firstAttribute="trailing" secondItem="1xR-x8-mDb" secondAttribute="trailing" id="OcT-T1-Vh9"/>
+                                            <constraint firstItem="pvQ-PE-jAA" firstAttribute="top" secondItem="1xR-x8-mDb" secondAttribute="top" id="SGy-kC-XsZ"/>
+                                            <constraint firstItem="ZzX-n0-zPV" firstAttribute="centerX" secondItem="jq6-Xz-xrX" secondAttribute="centerX" id="cU0-dv-5Mv"/>
+                                            <constraint firstItem="6iO-7B-WCJ" firstAttribute="top" secondItem="jq6-Xz-xrX" secondAttribute="top" constant="20" id="ffG-P5-A3p"/>
+                                            <constraint firstAttribute="trailing" secondItem="1xR-x8-mDb" secondAttribute="trailing" id="hZz-yW-WJ2"/>
+                                            <constraint firstItem="mu5-0G-WoO" firstAttribute="leading" secondItem="6iO-7B-WCJ" secondAttribute="leading" id="kuf-Jb-4nw"/>
+                                            <constraint firstItem="mu5-0G-WoO" firstAttribute="top" secondItem="6iO-7B-WCJ" secondAttribute="top" id="whN-6T-YK2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q93-f9-aq4" userLabel="PlayerOne" customClass="HandView" customModule="Play_Whot" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="526" width="363" height="140"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="zsC-Qb-nJK"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="fy0-mL-2tY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Gha-TT-7u6"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fy0-mL-2tY" secondAttribute="trailing" constant="16" id="NoJ-yN-QXr"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fy0-mL-2tY" secondAttribute="bottom" constant="20" id="Xdz-9h-Id4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Dh2-no-rCi" secondAttribute="bottom" id="0Y3-a0-LPT"/>
+                            <constraint firstItem="Dh2-no-rCi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="42X-xN-owH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Dh2-no-rCi" secondAttribute="trailing" constant="15" id="97F-7u-mFI"/>
+                            <constraint firstItem="Dh2-no-rCi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ZTk-0W-zdI"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="playerOneHand" destination="fy0-mL-2tY" id="C3t-tc-ZlN"/>
+                        <outlet property="playerOneHand" destination="Q93-f9-aq4" id="Rxv-X4-vil"/>
+                        <outlet property="playerTwoHand" destination="6zU-n0-Q84" id="tL9-y0-rXj"/>
+                        <outlet property="tableCard" destination="ZzX-n0-zPV" id="gJd-n8-AiE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="60" y="131"/>
+            <point key="canvasLocation" x="58.778625954198468" y="130.98591549295776"/>
         </scene>
     </scenes>
     <resources>
+        <image name="1playcard" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="whotback" width="300" height="420"/>
+        <image name="whotmarket" width="400" height="600"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
