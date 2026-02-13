@@ -128,9 +128,19 @@ class HandView: UIView {
 
         // Optional: auto-scroll selected card into view
         scrollView.scrollRectToVisible(
-            cardView.frame.insetBy(dx: -100, dy: 0),
+            cardView.frame.insetBy(dx: -50, dy: 0),
             animated: true
         )
+    }
+    
+    func getSelectedCard(from cards: [Card]) -> Card? {
+        guard let selected = selectedCard,
+              let index = cardImageViews.firstIndex(of: selected),
+              index < cards.count else {
+            return nil
+        }
+
+        return cards[index]
     }
 }
 

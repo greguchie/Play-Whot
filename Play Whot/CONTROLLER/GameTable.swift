@@ -18,14 +18,33 @@ class GameTable: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        playerOneHand.show(cards: myGame.player1.hand)
+        updateTable()
+        updateHand()
     }
-    //playerOneHand.show(images: myGame.player1.hand)
-    
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        print(myGame.tableCard)
-        print("player 1 card:\(myGame.player1.hand[0].shape)")
+        if let cardSelected = playerOneHand.getSelectedCard(from: myGame.player1.hand){
+            let movePlayed = myGame.playMove(cardSelected: cardSelected)
+            if movePlayed {
+                playerOneHand.show(cards: myGame.currentPlayer.hand)
+                updateTable()
+                updateHand()
+            }
+        } else {return}
+    }
+    @IBAction func marketPressed(_ sender: Any) {
+        myGame.goMarket()
+        updateTable()
+        updateHand()
+    }
+    
+    
+    func updateTable() {
+        tableCard.image = UIImage(named: "\(myGame.tableCard.shape)\(myGame.tableCard.number)")
+    }
+    
+    func updateHand (){
+        playerOneHand.show(cards: myGame.currentPlayer.hand)
     }
     
 }

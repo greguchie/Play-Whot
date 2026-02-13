@@ -34,6 +34,9 @@
                                                 <color key="backgroundColor" red="0.72156862749999995" green="0.48627450979999998" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="marketPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i8i-IP-LMV"/>
+                                                </connections>
                                             </button>
                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6iO-7B-WCJ" userLabel="marketStack">
                                                 <rect key="frame" x="273" y="20" width="70" height="130.33333333333334"/>
@@ -93,12 +96,24 @@
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgT-AN-npw">
+                                                <rect key="frame" x="0.0" y="351" width="74.666666666666671" height="35"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="Fr3-D0-tmA"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="6iO-7B-WCJ" secondAttribute="trailing" constant="20" id="00q-0Y-afZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="XgT-AN-npw" secondAttribute="bottom" id="36I-nx-DUc"/>
                                             <constraint firstItem="pvQ-PE-jAA" firstAttribute="bottom" secondItem="1xR-x8-mDb" secondAttribute="bottom" id="7Vp-Hk-8qb"/>
                                             <constraint firstItem="pvQ-PE-jAA" firstAttribute="leading" secondItem="1xR-x8-mDb" secondAttribute="leading" id="7tt-Op-wwq"/>
+                                            <constraint firstItem="XgT-AN-npw" firstAttribute="leading" secondItem="jq6-Xz-xrX" secondAttribute="leading" id="AEs-id-emf"/>
                                             <constraint firstItem="mu5-0G-WoO" firstAttribute="trailing" secondItem="6iO-7B-WCJ" secondAttribute="trailing" id="BHk-f8-se0"/>
                                             <constraint firstAttribute="bottom" secondItem="1xR-x8-mDb" secondAttribute="bottom" id="Hu1-QJ-9UL"/>
                                             <constraint firstItem="ZzX-n0-zPV" firstAttribute="centerY" secondItem="jq6-Xz-xrX" secondAttribute="centerY" id="Kov-O9-QNI"/>
@@ -109,7 +124,10 @@
                                             <constraint firstItem="6iO-7B-WCJ" firstAttribute="top" secondItem="jq6-Xz-xrX" secondAttribute="top" constant="20" id="ffG-P5-A3p"/>
                                             <constraint firstAttribute="trailing" secondItem="1xR-x8-mDb" secondAttribute="trailing" id="hZz-yW-WJ2"/>
                                             <constraint firstItem="mu5-0G-WoO" firstAttribute="leading" secondItem="6iO-7B-WCJ" secondAttribute="leading" id="kuf-Jb-4nw"/>
+                                            <constraint firstItem="XgT-AN-npw" firstAttribute="leading" secondItem="jq6-Xz-xrX" secondAttribute="leading" id="lvY-Ys-Q0z"/>
+                                            <constraint firstItem="pvQ-PE-jAA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XgT-AN-npw" secondAttribute="trailing" constant="8" symbolic="YES" id="uJj-gG-wbc"/>
                                             <constraint firstItem="mu5-0G-WoO" firstAttribute="top" secondItem="6iO-7B-WCJ" secondAttribute="top" id="whN-6T-YK2"/>
+                                            <constraint firstAttribute="bottom" secondItem="XgT-AN-npw" secondAttribute="bottom" id="x4p-03-5s7"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q93-f9-aq4" userLabel="PlayerOne" customClass="HandView" customModule="Play_Whot" customModuleProvider="target">
