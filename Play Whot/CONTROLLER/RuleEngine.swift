@@ -7,9 +7,19 @@
 
 // this is created to check the game after each player makes a moves
 struct RuleEngine {
-    static func isValidMove(card: Card, tableCard: Card) -> Bool {
-        let cardPlay = card
-        return matchesShape(cardPlay, tableCard) || matchesNumber(cardPlay, tableCard)
+    static func isValidMove(card: Card,
+                            tableCard: Card,
+                            whotRequest: Shape?) -> Bool {
+        // if nill, code is skipped
+        if let shapeForced = whotRequest {
+            //returns true if play card shape matches a requested shape
+            return card.shape == shapeForced
+        }
+        //check for standard shape/number match
+        let cardMatch = matchesShape(card, tableCard) || matchesNumber(card, tableCard)
+        //allow special20 to be played at anytime of the game
+        let isSpecial = card.shape == .special
+        return cardMatch || isSpecial
     }
     
     // MARK: - for Single Move
