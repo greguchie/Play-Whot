@@ -18,58 +18,51 @@ class GameTable: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        updateTable()
-        updateHands()
+        updateTableUI()
+        updateHandsUI()
         
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        if myGame.currentPlayer === myGame.player1 {
-            if let cardSelected = playerOneHand.getSelectedCard(from: myGame.player1.hand){
-                let movePlayed = myGame.playMove(cardSelected: cardSelected)
-                if movePlayed {
-                    updateTable()
-                    updateHands()
-                    if myGame.tableCard.number == 20 {
-                        presentShapeRequest()
-                    }
+        if let cardSelected = playerOneHand.getSelectedCard(from: myGame.player1.hand) {
+            let movePlayed = myGame.playMove(cardSelected: cardSelected)
+            if movePlayed {
+                if myGame.tableCard.number == 20 {
+                    presentShapeRequest()
                 }
-            } else {return}
+                updateTableUI()
+                updateHandsUI()
+                
+            }
         }
         else {
-            print("player 1, wait you turn")
-        }
-    }
-    @IBAction func play2Pressed(_ sender: Any) {
-        if myGame.currentPlayer === myGame.player2 {
-            if let cardSelected = playerTwoHand.getSelectedCard(from: myGame.player2.hand){
-                let movePlayed = myGame.playMove(cardSelected: cardSelected)
-                if movePlayed {
-                    updateTable()
-                    updateHands()
-                    if myGame.tableCard.number == 20 {
-                        presentShapeRequest()
-                    }
-                }
-            } else {return}
-        }
-        else {
-            print("player 2, wait you turn")
+            print("no card selected")
         }
     }
     
+    @IBAction func player2play(_ sender: Any) {
+        if let cardSelected = playerTwoHand.getSelectedCard(from: myGame.player2.hand){
+            let movePlayed = myGame.playMove(cardSelected: cardSelected)
+            if movePlayed {
+                updateTableUI()
+                updateHandsUI()
+                if myGame.tableCard.number == 20 {
+                    presentShapeRequest()
+                }
+            }
+        }
+    }
     @IBAction func marketPressed(_ sender: Any) {
         myGame.goMarket()
-        updateTable()
-        updateHands()
+        updateHandsUI()
     }
     
     
-    func updateTable() {
+    func updateTableUI() {
         tableCard.image = UIImage(named: "\(myGame.tableCard.shape)\(myGame.tableCard.number)")
     }
     
-    func updateHands (){
+    func updateHandsUI (){
         playerOneHand.show(cards: myGame.player1.hand)
         playerTwoHand.show(cards: myGame.player2.hand)
     }
@@ -80,19 +73,19 @@ class GameTable: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-
+        
         for shape in Shape.allCases where shape != .special {
             alert.addAction(UIAlertAction(title: "\(shape)", style: .default) { _ in
                 self.myGame.setRequestedShape(shape)
-                self.updateTable()
-                self.updateHands()
+                self.updateTableUI()
+                self.updateHandsUI()
                 print("player has requested \(shape)")
             })
         }
-
+        
         present(alert, animated: true)
     }
-
+    
     
 }
 

@@ -8,18 +8,21 @@
 // this is created to check the game after each player makes a moves
 struct RuleEngine {
     static func isValidMove(card: Card,
-                            tableCard: Card,
-                            whotRequest: Shape?) -> Bool {
-        // if nill, code is skipped
-        if let shapeForced = whotRequest {
-            //returns true if play card shape matches a requested shape
-            return card.shape == shapeForced
-        }
-        //check for standard shape/number match
+                            tableCard: Card,) -> Bool {
         let cardMatch = matchesShape(card, tableCard) || matchesNumber(card, tableCard)
         //allow special20 to be played at anytime of the game
-        let isSpecial = card.shape == .special
-        return cardMatch || isSpecial
+        let isSpecial20 = cardIs20(card)
+        return cardMatch || isSpecial20
+    }
+    // check if played table card is whot20
+    static func isWhotRequest(_ tableCard: Card) -> Bool{
+        return tableCard.shape == .special
+    }
+    static func checkWhotPlay(_ whotRequest:Shape?, _ card:Card) -> Bool {
+        if let forcedShape = whotRequest {
+            return card.shape == forcedShape
+        }
+        return false
     }
     
     // MARK: - for Single Move
@@ -32,7 +35,16 @@ struct RuleEngine {
         //check number eqaulity
         return card.number == table.number
     }
+    
+    //        // check starting card
+    static func cardIs20(_ card: Card) -> Bool {
+        return card.number == 20
+    }
 }
 
 
 // MARK: - IMPLEMENT HOLDON, PICK TWO, GEN & I NEED
+
+
+
+

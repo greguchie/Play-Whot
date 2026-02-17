@@ -15,8 +15,9 @@ class GameBrain {
     private(set) var tableCard: Card
     private(set) var currentPlayer: Player
     private(set) var market: [Card]
-    private(set) var requestedShape: Shape?
-
+    private(set) var tableCardHistory: [Card]  = []
+    var requestedShape: Shape?
+    
     
     init() {
         //when a deck is created, it is first shuffled by the game
@@ -25,66 +26,43 @@ class GameBrain {
         deck.shuffle()
         
         //now each player is deal 7 cards each from the shuffled deck. note this turns the player.hasWon property false even though we are not using the property now
-        player1 = Player(hand: deck.dealAHand(6))
-        player2 = Player(hand: deck.dealAHand(6))
+        player1 = Player(name: "kachi", hand: deck.dealAHand(5))
+        player2 = Player(name: "ebuka", hand: deck.dealAHand(5))
         
         //game places a random card from the current deck of cards created, and player one becomes first player
         tableCard = deck.groupOfCards.randomElement()!
         currentPlayer = player1
+        //storemarket for use and reshuffling
+        tableCardHistory.append(tableCard)
         market = deck.groupOfCards
     }
     
     func playMove(cardSelected: Card) -> Bool {
-        //note: a move is an input, will be provided by UI upon interation
-        //check if this is a valid move
-        guard
-            //game continues if true
-            RuleEngine.isValidMove(card: cardSelected,
-                                   tableCard: tableCard,
-                                   whotRequest: requestedShape)
+        requestWhotReset()
+        // If a WHOT request is active, enforce playing the requested shape
+        if RuleEngine.isWhotRequest(tableCard) {
+            guard RuleEngine.checkWhotPlay(requestedShape, cardSelected) || RuleEngine.cardIs20(cardSelected)
+            else {
+                print("please play requested shape or GO GEN.!")
+                return false
+            }
+            if let index = currentPlayer.hand.firstIndex(of: cardSelected) {
+                currentPlayer.hand.remove(at: index)
+                updateTableCard(cardSelected)
+            }
+        }
+        else if RuleEngine.isValidMove(card: cardSelected, tableCard: tableCard) {
+            // valid normal move; proceed
+            if let index = currentPlayer.hand.firstIndex(of: cardSelected) {
+                currentPlayer.hand.remove(at: index)
+            }
+            // Update the table card and reset any pending request
+            updateTableCard(cardSelected)
+        }
         else {
-            //game asks for a valid move if false
-            print("please make a valid move or GO GEN.!")
+            print("Invalid move. Please try again or go market")
             return false
         }
-        
-        //Remove cards from player
-        if let index = currentPlayer.hand.firstIndex(of: cardSelected) {
-            currentPlayer.hand.remove(at: index)
-            
-        }
-        
-        // played card placed on table
-        tableCard = cardSelected
-        //check for 1, 2, 14 and 20
-        let opponent = (currentPlayer === player1) ? player2 : player1
-        if tableCard.number == 1 {
-            print("hold on, player 2 skips a turn")
-            //turn skipped, no switch (i.e. currentplayer = opponent)
-            return true
-        }
-        if tableCard.number == 2 {
-            print("pick two, player 2 take 2 cards from market and skips a turn")
-            forcedMarket(player: opponent)
-            forcedMarket(player: opponent)
-            //turn skipped, no switch (i.e. currentplayer = opponent)
-            return true
-        }
-        if tableCard.number == 14 {
-            print("GO GEN, player 2 picks from the market, and skips a turn")
-            forcedMarket(player: opponent)
-            //turn skipped, no switch (i.e. currentplayer = opponent)
-            return true
-        }
-        if tableCard.number == 20 {
-            print("I need ...")
-            return true
-        }
-        
-        requestedShape = nil
-        // Switch turn (off for now)
-        currentPlayer = (currentPlayer === player1) ? player2 : player1
-        
         return true
     }
     
@@ -92,12 +70,11 @@ class GameBrain {
         if market.count > 0 {
             let marketCard = market.removeFirst()
             currentPlayer.hand.insert(marketCard, at: 0)
-            print ("remaining cards: \(market.count) total")
+            print ("\(currentPlayer.name) went ot market, remaining cards: \(market.count) total")
         } else {
             print("no cards left in market")
         }
-        //switches turns by default
-        currentPlayer = (currentPlayer === player1) ? player2 : player1
+        switchTurn()
     }
     
     func forcedMarket(player: Player){
@@ -111,10 +88,42 @@ class GameBrain {
     }
     
     func setRequestedShape(_ shape: Shape) {
+        //will be set by UI or CPU
         requestedShape = shape
-        // Switch turn AFTER shape is chosen (off for now)
+    }
+    
+    func updateTableCard(_ card: Card) {
+        //store previous table card
+        tableCardHistory.append(tableCard)
+        //update current played card after passing rule engine
+        tableCard = card
+    }
+    
+    func requestWhotReset(){
+        //resets nil value of whotrequest, if request is granted
+        if !RuleEngine.isWhotRequest(tableCard) {
+            requestedShape = nil
+        }
+    }
+    
+    func switchTurn(){
         currentPlayer = (currentPlayer === player1) ? player2 : player1
     }
     
-    
+    func performActions() {
+        let opponent = (currentPlayer === player1) ? player2 : player1
+        if tableCard.number == 1 {
+            // opponent skips turn
+        }
+        if tableCard.number == 2 {
+            print("\(opponent.name) pick two and skip turn")
+            forcedMarket(player: opponent)
+            forcedMarket(player: opponent)
+        }
+        if tableCard.number == 14 {
+            print("\(opponent.name) go gen and skip turn")
+            forcedMarket(player: opponent)
+        }
+    }
 }
+
