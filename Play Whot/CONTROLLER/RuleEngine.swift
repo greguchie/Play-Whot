@@ -18,6 +18,8 @@ struct RuleEngine {
     static func isWhotRequest(_ tableCard: Card) -> Bool{
         return tableCard.shape == .special
     }
+    
+    // check that card to be played matches shape requested
     static func checkWhotPlay(_ whotRequest:Shape?, _ card:Card) -> Bool {
         if let forcedShape = whotRequest {
             return card.shape == forcedShape
@@ -36,7 +38,7 @@ struct RuleEngine {
         return card.number == table.number
     }
     
-    //        // check starting card
+    // check a card is 20
     static func cardIs20(_ card: Card) -> Bool {
         return card.number == 20
     }

@@ -24,37 +24,45 @@ class GameTable: UIViewController {
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
+        guard myGame.currentPlayer === myGame.player1
+        else {
+            print("wait your turn kachi")
+            return}
         if let cardSelected = playerOneHand.getSelectedCard(from: myGame.player1.hand) {
-            let movePlayed = myGame.playMove(cardSelected: cardSelected)
-            if movePlayed {
-                if myGame.tableCard.number == 20 {
-                    presentShapeRequest()
-                }
-                updateTableUI()
-                updateHandsUI()
-                
-            }
+            myGame.playMove(cardSelected: cardSelected)
+            handlePostPlayState()
+            updateTableUI()
+            updateHandsUI()
+            checkForCPUTurn()
+            
         }
         else {
             print("no card selected")
         }
     }
     
-    @IBAction func player2play(_ sender: Any) {
-        if let cardSelected = playerTwoHand.getSelectedCard(from: myGame.player2.hand){
-            let movePlayed = myGame.playMove(cardSelected: cardSelected)
-            if movePlayed {
-                updateTableUI()
-                updateHandsUI()
-                if myGame.tableCard.number == 20 {
-                    presentShapeRequest()
-                }
-            }
-        }
-    }
+//    @IBAction func play2(_ sender: Any) {
+//        guard myGame.currentPlayer === myGame.player2
+//        else {
+//            print("wait your turn ebuka")
+//            return}
+//        if let cardSelected = playerTwoHand.getSelectedCard(from: myGame.player2.hand) {
+//            if cardSelected.number == 20 {
+//                presentShapeRequest()
+//            }
+//            myGame.playMove(cardSelected: cardSelected)
+//            updateTableUI()
+//            updateHandsUI()
+//            
+//        }
+//        else {
+//            print("no card selected")
+//        }
+//    }
     @IBAction func marketPressed(_ sender: Any) {
         myGame.goMarket()
         updateHandsUI()
+        checkForCPUTurn()
     }
     
     
@@ -79,13 +87,40 @@ class GameTable: UIViewController {
                 self.myGame.setRequestedShape(shape)
                 self.updateTableUI()
                 self.updateHandsUI()
-                print("player has requested \(shape)")
+                print("kachi has requested \(shape)")
+                self.checkForCPUTurn()
             })
         }
         
         present(alert, animated: true)
+        
     }
     
+    func checkForCPUTurn() {
+        guard myGame.currentPlayer is CPUPlayer else { return }
+        // Disable human interaction during CPU turn
+        playerTwoHand.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            self.myGame.performCPUTurn()
+            self.updateTableUI()
+            self.updateHandsUI()
+            // If still CPU turn (due to skip cards etc)
+            self.checkForCPUTurn()
+            
+            // Re-enable interaction if turn switched
+            if !(self.myGame.currentPlayer is CPUPlayer) {
+                self.playerTwoHand.isUserInteractionEnabled = true
+            }
+        }
+    }
     
+    private func handlePostPlayState() {
+        switch myGame.gameState {
+        case .waitingForShape:
+            presentShapeRequest()
+        default:
+            break
+        }
+    }
 }
 

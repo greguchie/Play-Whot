@@ -15,4 +15,5 @@ class Player {
     var hasWon: Bool {
         return hand.isEmpty
     }
+    
 }
