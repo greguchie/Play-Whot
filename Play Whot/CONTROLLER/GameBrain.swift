@@ -82,6 +82,7 @@ class GameBrain {
     }
     
     func performCPUTurn(){
+        requestWhotReset()
         guard let cpu = currentPlayer as? CPUPlayer else { return }
         if let cardselected = cpu.chooseMove(tableCard: tableCard, shapeRequested: requestedShape) {
             playMove(cardSelected: cardselected)
